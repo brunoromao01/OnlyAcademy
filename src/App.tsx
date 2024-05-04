@@ -9,6 +9,9 @@ function App(): React.JSX.Element {
       <Text>
         OnlyAcademy
       </Text>
+      <Text>
+        Teste branch
+      </Text>
     </View>
   );
 }
