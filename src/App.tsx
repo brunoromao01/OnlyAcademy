@@ -12,6 +12,9 @@ function App(): React.JSX.Element {
       <Text>
         Teste branch
       </Text>
+      <Text>
+        Teste branch
+      </Text>
     </View>
   );
 }
