@@ -1,19 +1,14 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-
+import { NavigationContainer } from '@react-navigation/native';
 
 function App(): React.JSX.Element {
 
   return (
-    <View style={styles.container}>
-      <Text>
-        OnlyAcademy
-      </Text>
-      <Text>
-        Teste branch
-      </Text>
-      
-    </View>
+
+    <NavigationContainer>
+      <View><Text>App</Text></View>
+    </NavigationContainer>
   );
 }
 
