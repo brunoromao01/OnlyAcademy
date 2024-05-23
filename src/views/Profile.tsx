@@ -8,6 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 function Profile(): React.JSX.Element {
     const imagens = content
 
+  
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
