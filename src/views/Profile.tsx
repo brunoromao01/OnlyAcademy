@@ -1,21 +1,22 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, FlatList, Dimensions, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity, FlatList, Dimensions, ImageBackground, TouchableWithoutFeedback } from 'react-native';
 import Content from '../components/Content'
 import content from '../assets/base64';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/native'
+// import Feed from './Feed';
 
-
-function Profile(): React.JSX.Element {
+export default function Profile({ navigation }) {
     const imagens = content
-
-  
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
                 <ImageBackground source={require('../assets/fundo.jpeg')} style={{ width: '100%', height: '110%', flexDirection: 'row', justifyContent: 'space-between', }}>
-                    <View style={styles.buttonIcon}>
-                        <FontAwesome name={'arrow-left'} size={20} color={'#555'} />
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Feed')}>
+                        <View style={styles.buttonIcon}>
+                            <FontAwesome name={'arrow-left'} size={20} color={'#555'} />
+                        </View>
+                    </TouchableWithoutFeedback>
                     <View style={styles.buttonIcon}>
                         <FontAwesome name={'envelope'} size={20} color={'#555'} />
                     </View>
@@ -157,4 +158,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Profile;
+// export default Profile;

@@ -4,10 +4,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import content from '../assets/base64foto';
 
-function Feed(): React.JSX.Element {
+export default function Feed({ navigation }) {
     const [photo, setPhoto] = useState('')
-    console.log(content)
-    console.log('content')
     const contents = content
 
     const pickImageCamera = async () => {
@@ -62,7 +60,12 @@ function Feed(): React.JSX.Element {
                             <FontAwesome name={'camera'} size={20} color={'#555'} />
                         </View>
                     </TouchableWithoutFeedback>
-                    <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Explore</Text>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            navigation.navigate('Profile')
+                        }}>
+                        <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Explore</Text>
+                    </TouchableWithoutFeedback>
                     <View style={styles.buttonIcon}>
                         <FontAwesome name={'bell'} size={20} color={'#555'} />
                     </View>
@@ -75,7 +78,6 @@ function Feed(): React.JSX.Element {
                             const pathImage = {
                                 uri: (item.photo)
                             }
-                            console.log(item)
 
                             return (
                                 <View style={styles.viewUsers}>
@@ -152,4 +154,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Feed;
+
