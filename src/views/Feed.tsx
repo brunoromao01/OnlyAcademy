@@ -52,23 +52,19 @@ export default function Feed({ navigation }) {
         <View style={styles.container}>
             <View style={styles.containerTop}>
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TouchableWithoutFeedback
-                        onPress={() => {
-                            handleImageUser()
-                        }}>
+                    <TouchableWithoutFeedback onPress={() => handleImageUser()}>
                         <View style={styles.buttonIcon}>
                             <FontAwesome name={'camera'} size={20} color={'#555'} />
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback
-                        onPress={() => {
-                            navigation.navigate('Profile')
-                        }}>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Profile')}>
                         <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Explore</Text>
                     </TouchableWithoutFeedback>
-                    <View style={styles.buttonIcon}>
-                        <FontAwesome name={'bell'} size={20} color={'#555'} />
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Payment')}>
+                        <View style={styles.buttonIcon}>
+                            <FontAwesome name={'money'} size={20} color={'#555'} />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
                 <>
                     <FlatList
