@@ -1,11 +1,39 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, Linking, Dimensions, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Image, TouchableOpacity, Alert, ImageBackground, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import { supabase } from '../services/lib/supabase';
+import { useNavigation } from '@react-navigation/native'
 
 
 export default function Login({ navigation }) {
-    const [login, setLogin] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [isLogin, setIsLogin] = useState(true)
+
+
+    const handleSignup = async () => {
+        const { error, data } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        })
+        if (error) Alert.alert(error.message)
+    }
+
+    const handleLogin = async () => {
+        const { error, data } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        })
+        if (error) Alert.alert(error.message)
+        navigation.navigate('Profile')
+    }
+
+    useEffect(() => {
+        setConfirmPassword('')
+        setPassword('')
+        setEmail('')
+    }, [isLogin])
 
     return (
         <View style={styles.container}>
@@ -14,31 +42,60 @@ export default function Login({ navigation }) {
 
             </View>
             <View style={styles.containerBottom}>
+                <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-evenly', marginBottom: 20 }}>
+                    <TouchableWithoutFeedback onPress={() => setIsLogin(true)}>
+                        <View style={{ borderBottomWidth: isLogin ? 1 : 0, borderColor: 'white', width: '50%', alignItems: 'center' }}>
+                            <Text style={{ color: 'white', fontSize: isLogin ? 22 : 20, }}>Login</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => setIsLogin(false)}>
+                        <View style={{ borderBottomWidth: isLogin ? 0 : 1, borderColor: 'white', width: '50%', alignItems: 'center' }}>
+                            <Text style={{ color: 'white', fontSize: isLogin ? 20 : 22, }}>Cadastrar</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
                 <TextInput style={[styles.input, { marginBottom: 10 }]}
-                    value={login}
-                    onChangeText={text => setLogin(text)}
-                    placeholder='Login'
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    placeholder='Email'
                     placeholderTextColor={'black'}
                     mode='flat'
-                    label='Login'
+                    label='Email'
 
                 />
                 <TextInput style={[styles.input, { marginTop: 10 }]}
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    placeholder='Password'
+                    placeholder='Senha'
                     placeholderTextColor={'black'}
                     mode='flat'
-                    label='Password'
+                    label='Senha'
+                    secureTextEntry
                 />
+                {!isLogin ?
+                    <TextInput style={[styles.input, { marginTop: 20 }]}
+                        value={confirmPassword}
+                        onChangeText={text => setConfirmPassword(text)}
+                        placeholder='Confirme a senha'
+                        placeholderTextColor={'black'}
+                        mode='flat'
+                        label='Confirme a senha'
+                        secureTextEntry
+                    /> : false
+                }
+                <TouchableOpacity onPress={() => {
+                    if (isLogin) {
+                        handleLogin()
+                    } else {
+                        console.log('aqui')
+                        handleSignup()
+                    }
 
-                <View style={styles.button}>
-                    <TouchableOpacity>
-
+                }}>
+                    <View style={styles.button}>
                         <Text style={styles.textButton}>Logar</Text>
-
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </TouchableOpacity>
 
             </View >
         </View >
@@ -77,19 +134,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     button: {
-        width: '90%',
+        width: 300,
         height: 60,
         backgroundColor: '#6508B3',
         marginTop: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30,
+        borderRadius: 20,
         borderWidth: 1,
         borderColor: '#8e15f1'
     },
     textButton: {
         color: '#fff',
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 
 });
