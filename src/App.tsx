@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from './views/Profile';
 import Feed from './views/Feed';
 import Payment from './views/Payment';
+import Login from './views/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,8 @@ export default function App() {
 	return (
 		<>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="Feed" screenOptions={{ headerShown: false }}>
+				<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+					<Stack.Screen name="Login" component={Login} />
 					<Stack.Screen name="Profile" component={Profile} />
 					<Stack.Screen name="Feed" component={Feed} />
 					<Stack.Screen name="Payment" component={Payment} />
@@ -22,6 +24,7 @@ export default function App() {
 		</>
 	);
 }
+
 
 
 

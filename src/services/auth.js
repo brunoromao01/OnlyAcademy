@@ -1,0 +1,5 @@
+const passwordapi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndibHJ3d2d3bXptandtaW1kanB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgzMjE2NzksImV4cCI6MjAzMzg5NzY3OX0.EQjJerdURvsaCLKbjAsmemxoojQkKB9erwZpqQajw64'
+
+const url = `https://wblrwwgwmzmjwmimdjpt.supabase.co`
+
+export { passwordapi, url }
