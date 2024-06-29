@@ -6,20 +6,23 @@ import Profile from './views/Profile';
 import Feed from './views/Feed';
 import Payment from './views/Payment';
 import Login from './views/Login';
+import { AuthContextProvider } from './hook/useAuth';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 	return (
 		<>
-			<NavigationContainer>
-				<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="Login" component={Login} />
-					<Stack.Screen name="Profile" component={Profile} />
-					<Stack.Screen name="Feed" component={Feed} />
-					<Stack.Screen name="Payment" component={Payment} />
-				</Stack.Navigator>
-			</NavigationContainer>
+			<AuthContextProvider>
+				<NavigationContainer>
+					<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+						<Stack.Screen name="Login" component={Login} />
+						<Stack.Screen name="Profile" component={Profile} />
+						<Stack.Screen name="Feed" component={Feed} />
+						<Stack.Screen name="Payment" component={Payment} />
+					</Stack.Navigator>
+				</NavigationContainer>
+			</AuthContextProvider>
 
 		</>
 	);
