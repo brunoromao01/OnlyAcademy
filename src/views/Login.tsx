@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, Alert, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity, Alert, ImageBackground, TouchableWithoutFeedback, ToastAndroid } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../services/lib/supabase';
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '../hook/useAuth';
 
 
 export default function Login({ navigation }) {
@@ -10,23 +11,36 @@ export default function Login({ navigation }) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [isLogin, setIsLogin] = useState(true)
-
-
-    const handleSignup = async () => {
-        const { error, data } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-        })
-        if (error) Alert.alert(error.message)
-    }
+    const { user, setUser } = useAuth()
 
     const handleLogin = async () => {
-        const { error, data } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        })
+
+        if (error) {
+            Alert.alert('Erro:', error.message)
+        } else {
+            console.log('data.user')
+            console.log(data.user)
+            setUser(data.user)
+            navigation.navigate('Profile', { id: data.user.id })
+        }
+    }
+
+    const handleSignup = async () => {
+        const data = await supabase.auth.signUp({
             email: email,
             password: password,
         })
-        if (error) Alert.alert(error.message)
-        navigation.navigate('Profile')
+        if (data.error) {
+            Alert.alert('Erro', data.error.message)
+        } else {
+            setUser(data.user)
+            setIsLogin(true)
+            ToastAndroid.showWithGravity('Cadastrado com sucesso!', ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50);
+        }
     }
 
     useEffect(() => {
@@ -87,13 +101,12 @@ export default function Login({ navigation }) {
                     if (isLogin) {
                         handleLogin()
                     } else {
-                        console.log('aqui')
                         handleSignup()
                     }
 
                 }}>
                     <View style={styles.button}>
-                        <Text style={styles.textButton}>Logar</Text>
+                        <Text style={styles.textButton}>{isLogin ? 'Logar' : 'Cadastrar'}</Text>
                     </View>
                 </TouchableOpacity>
 
